@@ -7,8 +7,8 @@ const darkColor: ThemeColors = {
     primary: "#13BEBB",
     secondary: "#21125E",
     background: {
-        default: "#1D1E1F",
-        paper: "#2E2F31"
+        default: "#89AEB2",
+        paper: "#e1e8e3"
     }
 }
 
@@ -35,7 +35,7 @@ export const ThemeContext = React.createContext<ThemeContext>({
     isDark: false,
     toggleTheme: () => undefined
 })
-  
+
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({
     children,
