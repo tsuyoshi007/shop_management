@@ -10,12 +10,11 @@ const App: React.FC = () => {
     return (
       <ThemeProvider isDefaultDark={true}>
           <AppLayout>
-            <h1>tet</h1>
           </AppLayout>
       </ThemeProvider>
     )
   }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById("root"));
 
-serviceWorker.unregister()
+serviceWorker.unregister();
