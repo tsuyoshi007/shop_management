@@ -1,16 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import * as serviceWorker from "./serviceWorker";
-import ThemeProvider from "./components/Theme";
-import Product from "./views/Product";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import * as serviceWorker from './serviceWorker'
+import AppLayout from './components/AppLayout'
+// import LoginPage from './views/Login/components/LoginPage'
+
+import ThemeProvider from './components/Theme'
 
 const App: React.FC = () => {
-  return (
-    <ThemeProvider>
-      <Product></Product>
-    </ThemeProvider>
-  );
-};
+    return (
+      <ThemeProvider isDefaultDark={true}>
+          <AppLayout>
+          </AppLayout>
+      </ThemeProvider>
+    )
+  }
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
