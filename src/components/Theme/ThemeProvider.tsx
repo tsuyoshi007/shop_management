@@ -8,7 +8,7 @@ const darkColor: ThemeColors = {
   secondary: "#ff420e",
   background: {
     default: "#80bd9e",
-    paper: "#89da59"
+    paper: "#e66465"
   }
 };
 

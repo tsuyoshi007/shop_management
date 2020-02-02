@@ -10,6 +10,7 @@ const App: React.FC = () => {
     return (
       <ThemeProvider isDefaultDark={true}>
           <AppLayout>
+            <h1>Testing content</h1>
           </AppLayout>
       </ThemeProvider>
     )
