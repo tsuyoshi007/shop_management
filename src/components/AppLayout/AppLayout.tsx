@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { makeStyles, Theme } from '@material-ui/core/styles'
 import useTheme from '../../hooks/useTheme'
 import ResponsiveDrawer from './components/ResponsiveDrawer'
 import Hidden from '@material-ui/core/Hidden'
@@ -11,9 +11,12 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Chip from '@material-ui/core/Chip'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import FaceIcon from '@material-ui/icons/Face'
+import createMenuStructure, { MenuItem } from './components/Menu/components/MenuItem'
+import MenuList from './components/Menu/MenuList'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme:Theme) => 
-    createStyles({
+    ({
         root: {
             width: `100%`
         },
@@ -35,7 +38,7 @@ const useStyles = makeStyles((theme:Theme) =>
                 marginTop: 5,
                 marginLeft:2,
                 transform: "rotate(180deg)"
-            },
+            },  
             "&:hover": {
                 background: "#E6F3F3"
             },
@@ -92,13 +95,13 @@ const useStyles = makeStyles((theme:Theme) =>
         menuIcon: {
             "& span": {
                 "&:nth-child(1)": {
-                top: 15
+                    top: 15
                 },
                 "&:nth-child(2), &:nth-child(3)": {
-                top: 20
+                    top: 20
                 },
                 "&:nth-child(4)": {
-                top: 25
+                 top: 25
                 },
                 background: theme.palette.secondary.light,
                 display: "block",
@@ -148,7 +151,7 @@ const useStyles = makeStyles((theme:Theme) =>
             zIndex: 1999
         },
         view: {
-            ackgroundColor: theme.palette.background.default,
+            backgroundColor: theme.palette.background.default,
             flex: 1,
             flexGrow: 1,
             marginLeft: 0,
@@ -156,6 +159,19 @@ const useStyles = makeStyles((theme:Theme) =>
             [theme.breakpoints.up("sm")]: {
                 paddingBottom: theme.spacing() * 3
             }
+        },
+        userChip: {
+            backgroundColor: theme.palette.background.default,
+            borderRadius: 24,
+            color: theme.palette.text.primary,
+            height: 40,
+            padding: theme.spacing(0.5)
+        },
+        logo: {
+            background: theme.palette.secondary.main,
+            display: "block",
+            height: 80,
+            position: "relative"
         }
     })
 )
@@ -170,7 +186,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
     const {isDark, toggleTheme} = useTheme()
     const [isMenuSmall, setMenuSmall] = useLocalStorage("isMenuSmall", false);
     const [isDrawerOpened, setDrawerState] = React.useState(false)
-    const [isMenuOpened, setMenuState] = React.useState(false)
+    const [isAccountMenu, setAccountMenu] = React.useState(false)
+    const menuItems: MenuItem[] = createMenuStructure()
 
     const handleMenuItemClick = (
         url: string,
@@ -193,7 +210,10 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                     open={isDrawerOpened}
                     small={!isMenuSmall}
                 >        
-                      <Hidden smDown>
+                    <div className={classes.logo}>
+                        <Typography>LOGO</Typography>
+                    </div>
+                    <Hidden smDown>
                         <div
                           className={classNames(classes.isMenuSmall, {
                             [classes.isMenuSmallHide]: isMenuSmall,
@@ -203,7 +223,10 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         >
                           <ArrowForwardIosIcon/>
                         </div>
-                      </Hidden>    
+                      </Hidden>
+                      <MenuList
+                        menuItems={menuItems}
+                      />
                 </ResponsiveDrawer>
             </aside>
             <Container className={classNames(classes.content, {
@@ -213,7 +236,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                     <div
                         className={classNames(classes.menuIcon, {
                             [classes.menuIconDark]: isDark,
-                            [classes.menuIconOpen]: isMenuOpened
+                            [classes.menuIconOpen]: isDrawerOpened
                         })}
                         onClick={() => setDrawerState(!isDrawerOpened)}
                     >
@@ -222,7 +245,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         <span />
                         <span />
                     </div>
-                    <div style={{flex:1}}/>
+                    <span style={{flex:1}}/>
                     <nav className={classes.userBar}>
                         <ThemeSwitcher
                         // really need to change the icon contrast in theme config
@@ -232,17 +255,19 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         <Chip   
                             icon={<FaceIcon/>}
                             label={
-                            <>
-                            demo@YSK.com
-                            <ArrowDropDown/>
-                            </>}
+                                <span>
+                                    demo@YSK.com
+                                    <ArrowDropDown/>
+                                </span>
+                            }
+                            className={classes.userChip}
                         >
-
+                            {/* use account menu state here  */}
                         </Chip>
                     </nav>
                 </header>
+                <main className={classes.view}>{children}</main>
             </Container>
-            <main className={classes.view}>{children}</main>
         </div>
     )
 }
