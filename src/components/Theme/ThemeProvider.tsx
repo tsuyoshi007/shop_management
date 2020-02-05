@@ -7,8 +7,8 @@ const darkColor: ThemeColors = {
   primary: "#f98866",
   secondary: "#ff420e",
   background: {
-    default: "#80bd9e",
-    paper: "#89da59"
+    default: "#ddd",
+    paper: "#acd"
   }
 };
 
@@ -17,7 +17,7 @@ const lightColor: ThemeColors = {
   primary: "#f98866",
   secondary: "#ff420e",
   background: {
-    default: "#ffffff",
+    default: "#ddd",
     paper: "#ffffff"
   }
 };

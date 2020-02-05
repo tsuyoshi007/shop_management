@@ -1,13 +1,12 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 // import useTheme from '../../../hooks/useTheme'
-
 const useStyles = makeStyles((theme:Theme) => 
-    createStyles({
+    ({
         container: {
             width: '100vw',
             maxWidth: '460px',
@@ -71,7 +70,7 @@ const LoginCard: React.FC<LoginCardProps> = (props) => {
                                 <TextField label="Password" />
                             </Box>
                             <Box>
-                                <Button variant="contained" color="secondary">
+                                <Button variant="contained" color="secondary" type="submit">
                                     Login
                                 </Button>
                             </Box>
