@@ -3,10 +3,13 @@ import {
   EDIT_PRODUCT,
   DELETE_PRODUCT,
   productAction
-} from "../actions/products";
-import { product } from "../actions/products";
+} from "../actions/product";
+import { Iproduct } from "../actions/product";
 
-export default function products(state: product[] = [], action: productAction) {
+export default function products(
+  state: Iproduct[] = [],
+  action: productAction
+) {
   switch (action.type) {
     case ADD_PRODUCT:
       return [...state, action.product];

@@ -16,7 +16,14 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
-import { product } from "../redux/actions/products";
+import { Icategory } from "../redux/actions/category";
+import { connect, ConnectedProps } from "react-redux";
+import { state } from "../redux/reducers/rootReducer";
+import {
+  addCategory,
+  editCategory,
+  deleteCategory
+} from "../redux/actions/category";
 
 const tableIcons: Icons = {
   Add: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
@@ -72,101 +79,56 @@ const tableIcons: Icons = {
   ))
 };
 
-// interface Row {
-//   product_id: number;
-//   product_name: string;
-//   product_details: string;
-//   product_wholesale_price: string;
-//   product_retail_price: string;
-//   product_quantity: string;
-//   category_id: number;
-// }
+const mapStateToProps = (state: state /*, ownProps*/) => {
+  return {
+    category: state.category
+  };
+};
+const mapDispatchToProps = { addCategory, editCategory, deleteCategory };
 
-interface TableState {
-  columns: Array<Column<product>>;
-  data: product[];
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type IpropsFromRedux = ConnectedProps<typeof connector>;
+type Iprops = IpropsFromRedux & Icategory;
+
+class Category extends React.Component<Iprops, {}> {
+  render() {
+    return (
+      <MaterialTable
+        title="Category"
+        icons={tableIcons}
+        columns={[
+          { title: "ID", field: "id" },
+          { title: "Name", field: "name" },
+          { title: "Description", field: "detail" }
+        ]}
+        data={this.props.category}
+        editable={{
+          onRowAdd: newData =>
+            new Promise(resolve => {
+              setTimeout(() => {
+                resolve();
+                this.props.addCategory(newData);
+              }, 600);
+            }),
+          onRowUpdate: (newData, oldData) =>
+            new Promise(resolve => {
+              setTimeout(() => {
+                resolve();
+                this.props.editCategory(newData);
+              }, 600);
+            }),
+          onRowDelete: oldData =>
+            new Promise(resolve => {
+              setTimeout(() => {
+                resolve();
+                this.props.deleteCategory(oldData);
+              }, 600);
+            })
+        }}
+      />
+    );
+  }
 }
 
-export default function MaterialTableDemo() {
-  const [state, setState] = React.useState<TableState>({
-    columns: [
-      { title: "ID", field: "product_id" },
-      { title: "Name", field: "product_name" },
-      { title: "Description", field: "product_details" },
-      {
-        title: "Wholesale Price",
-        field: "product_wholesale_price"
-      },
-      {
-        title: "Retail Price",
-        field: "product_retail_price"
-      },
-      {
-        title: "Quantity",
-        field: "product_quantity"
-      },
-      {
-        title: "Category",
-        field: "category_id",
-        lookup: { 1: "Fruit", 2: "Cloth" }
-      }
-    ],
-    data: [
-      {
-        product_id: 1,
-        product_name: "Banana",
-        product_details: "Banana is for eating",
-        product_wholesale_price: 0.5,
-        product_retail_price: 0.7,
-        product_quantity: 192,
-        category_id: 1
-      }
-    ]
-  });
-
-  return (
-    <MaterialTable
-      title="Product"
-      icons={tableIcons}
-      columns={state.columns}
-      data={state.data}
-      editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          })
-      }}
-    />
-  );
-}
+export default connector(Category);

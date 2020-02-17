@@ -1,13 +1,13 @@
 import { ADD_PRODUCT_TO_CART, CLEAR_CART, cartAction } from "../actions/cart";
-import { product } from "../actions/products";
+import { Iproduct } from "../actions/product";
 
-interface productInCart {
-  product: product;
+export interface IproductInCart {
+  product: Iproduct;
   quantity: number;
   price: number;
 }
 
-export default function cart(state: productInCart[] = [], action: cartAction) {
+export default function cart(state: IproductInCart[] = [], action: cartAction) {
   switch (action.type) {
     case ADD_PRODUCT_TO_CART:
       const itemIndex = state.findIndex(productInCart => {

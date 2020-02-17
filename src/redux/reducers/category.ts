@@ -3,11 +3,11 @@ import {
   EDIT_CATEGORY,
   DELETE_CATEGORY,
   categoryAction,
-  category
-} from "../actions/categories";
+  Icategory
+} from "../actions/category";
 
-export default function categories(
-  state: category[] = [],
+export default function category(
+  state: Icategory[] = [],
   action: categoryAction
 ) {
   switch (action.type) {
@@ -15,7 +15,7 @@ export default function categories(
       return [...state, action.category];
     case EDIT_CATEGORY: {
       const itemIndex = state.findIndex(
-        category => action.category.category_id === category.category_id
+        category => action.category.id === category.id
       );
       const newState = [
         ...state.slice(0, itemIndex),
@@ -27,7 +27,7 @@ export default function categories(
 
     case DELETE_CATEGORY: {
       const updatedProducts = state.filter(category => {
-        return category.category_id !== action.category.category_id;
+        return category.id !== action.category.id;
       });
 
       return updatedProducts;

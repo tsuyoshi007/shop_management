@@ -1,14 +1,14 @@
-import { product } from "./products";
+import { Iproduct } from "./product";
 
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
 export const CLEAR_CART = "CLEAR_CART";
 
 export interface cartAction {
   type: string;
-  product: product;
+  product: Iproduct;
 }
 
-export function addProductToCart(product: product) {
+export function addProductToCart(product: Iproduct) {
   return { type: ADD_PRODUCT_TO_CART, product: product };
 }
 
