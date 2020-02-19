@@ -36,10 +36,8 @@ export const ThemeContext = React.createContext<ThemeContext>({
   toggleTheme: () => undefined
 });
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  children,
-  isDefaultDark
-}) => {
+const ThemeProvider: React.FC<ThemeProviderProps> = props => {
+  const { children, isDefaultDark } = props;
   const [isDark, setDark] = React.useState(isDefaultDark);
   const toggleTheme = () => {
     setDark(!isDark);

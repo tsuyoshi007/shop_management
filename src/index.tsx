@@ -12,10 +12,13 @@ import ThemeProvider from "./components/Theme";
 import { createStore } from "redux";
 import rootReducer from "./redux/reducers/rootReducer";
 import { Provider } from "react-redux";
+import TabTitle from './components/TabTitle'
+
 
 const Routes: React.FC = () => {
   return (
     <Switch>
+      <TabTitle title={"Dashboard"}/>
       <SectionRoute exact permissions={true} path="/" component={Category} />
     </Switch>
   );
